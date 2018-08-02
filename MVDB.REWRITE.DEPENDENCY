@@ -1,0 +1,31 @@
+* VERY SIMPLE EXAMPLE.  I am including WOBJ in a new MVDBTOOLS library.  I have created this quick subroutine to
+* scan thru the wobj code and modify it to be unique to this module
+*
+* this is purely a POC and not the eventual tool
+
+CMND=SENTENCE()
+FILE.NAME=FIELD(CMND,' ',2)
+IF FILE.NAME='' THEN
+    PRINT "ENTER FILE: ":; INPUT FILE.NAME
+END
+OPEN FILE.NAME TO FI ELSE STOP
+SELECT FI
+LOOP
+   READNEXT ID ELSE EXIT
+   OLD.ID=ID
+   CHECK.ID=ID
+   CONVERT '.' TO @AM IN CHECK.ID
+   PRINT ID
+   IF CHECK.ID<1>='WOBJ' THEN
+       ID='MVDBTOOLKIT.':ID
+       READ REC FROM FI, OLD.ID ELSE CONTINUE
+       REC=SWAP(REC,"CALL WOBJ","CALL MVDBTOOLKIT.WOBJ")
+       REC=SWAP(REC,"INCLUDE WOBJ.INCLUDE","INCLUDE MVDBTOOLKIT.WOBJ.INCLUDE")
+       LINE1=REC<1>
+       LINE1=SWAP(LINE1,"WOBJ","MVDBTOOLKIT.WOBJ")
+       REC<1>=LINE1
+
+       WRITE REC ON FI, ID
+       PRINT OLD.ID,ID
+   END
+REPEAT
