@@ -1,6 +1,23 @@
 # mvdbmake
 Start of a compiler/dependency tool
 
+## Version 1.0
+
+Version 1 will handle setting up git projects into pick.  This will handle primarily handle setting up the q-pointers for the different platforms.
+
+D3 - Create dict, setup Q pointer.  Q pointer to root directory
+jBASE - Create F pointer.  Root is dict.
+Universe - Create F pointer - Universe has a weird format for multiple data sections.
+Unidata - Unknown
+OpenQM - Believe it supports both D3 and Universe syntax
+
+Also it would be nice to recognize the platform automatically.
+
+Right now the make program will prompt for where the gitlab project is at and figure everything out from there.
+
+## Version 2.0 - Future
+
+
 General idea is to come up with some concepts and then tools to handle including modules that are independent to your project.
 
 As an example lets say you want to use the WOBJ library with a new tool you are making.  Instead of relying on a global
